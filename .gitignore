@@ -1,0 +1,27 @@
+# Qt Creator and build
+*.pro.user
+*.pro.user.*
+*.autosave
+.qmake.stash
+Makefile.*
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.exe
+*.log
+debug/
+release/
+bin/
+
+# Qt Designer / UI
+*.ui~
+*.tmp
+*.moc
+*.rcc
+*.qrc
+
+# OS-specific
+.DS_Store
+Thumbs.db
