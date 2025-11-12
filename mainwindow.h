@@ -5,7 +5,7 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+class CalculusEngine;
 }
 QT_END_NAMESPACE
 
@@ -17,7 +17,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_btnCalculate_clicked();
+
 private:
-    Ui::MainWindow *ui;
+    Ui::CalculusEngine *ui;
 };
 #endif // MAINWINDOW_H
