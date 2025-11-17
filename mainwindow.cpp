@@ -6,7 +6,8 @@
 #include "Derivatives/node.h"
 #include "Derivatives/token.h"
 #include "Derivatives/parser.h"
-#include "Derivatives/evaluator.h"
+#include "Derivatives/simplifier.h"
+#include "Derivatives/differentiator.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,8 +39,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_calculateBtn_clicked()
 {
-    std::string function = ui->txtInputFunction->text().toStdString(); // "x^5 * y"
-    std::string vars = ui->txtInputVariables->text().toStdString(); // x y ...
+    std::string function = ui->txtInputFunction->text().toStdString();
+    std::string vars = ui->txtInputVariables->text().toStdString();
     ui->txtOutput->setPlainText("");
 
     Lexer lexer(function);
@@ -52,8 +53,9 @@ void MainWindow::on_calculateBtn_clicked()
     }
 
     Parser parser(tokens);
-    Evaluator eval;
     Node *root = parser.build_tree();
+    Differentiator diff;
+    Simplifier simp;
 
     std::vector<std::pair<std::string, std::string>> derivatives;
     for (int i = 0; i < vars.length(); i++) {
@@ -61,8 +63,8 @@ void MainWindow::on_calculateBtn_clicked()
             continue;
         }
         std::string var = std::string(1, vars[i]);
-        Node *temp = eval.differentiate(root, var);
-        temp = eval.advanced_simplify(temp);
+        Node *temp = diff.differentiate(root, var);
+        temp = simp.advanced_simplify(temp);
         std::string derivative = temp->pretty_print();
         derivatives.push_back({derivative, var});
     }
@@ -199,4 +201,5 @@ void MainWindow::on_clearBtn_clicked()
 {
     ui->txtInputFunction->clear();
     ui->txtOutput->clear();
+    ui->txtInputVariables->clear();
 }

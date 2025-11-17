@@ -129,5 +129,5 @@ Token Lexer::get_token()
     abort(std::string("Unknown token: ") + cur_char);
   }
 
-  return Token(std::string(1, '\0'), Token_Type::END_OF_LINE);
+  return Token('\0', Token_Type::END_OF_LINE);
 }
